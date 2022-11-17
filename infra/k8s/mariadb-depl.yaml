@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment # what to create?
+metadata:
+  name: auth-mariadb-depl
+spec: # specification for deployment resource
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-mariadb
+  template:
+    metadata:
+      labels:
+        app: auth-mariadb # service will look for this label
+    spec: # specification for pods
+      containers: # we can have one or more containers
+        - name: auth-mariadb
+          image: mariadb
+          ports:
+            - containerPort: 3306
+          env:
+            - name: MARIADB_ROOT_PASSWORD
+              value: secret
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-mariadb-srv
+spec:
+  selector:
+    app: auth-mariadb
+  ports:
+    - protocol: TCP
+      port: 3306
+      targetPort: 3306
