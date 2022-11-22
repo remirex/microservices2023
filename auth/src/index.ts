@@ -2,6 +2,7 @@ import express from 'express';
 
 import { exampleRouter } from './routes/example';
 import config from './config/env';
+import Logger from './config/logger';
 
 const app = express();
 
@@ -9,5 +10,5 @@ const app = express();
 app.use('/api/users', exampleRouter);
 
 app.listen(config.port, () => {
-  console.log(`Listening on port ${config.port}.`);
+  Logger.info(`Listening on port ${config.port}.`);
 });
