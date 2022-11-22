@@ -8,6 +8,7 @@ const envVarSchema = Joi.object()
   .keys({
     NODE_ENV: Joi.string().valid('production', 'development', 'staging', 'test', 'local').required(),
     PORT: Joi.number().default(3000),
+    LOG_LEVEL: Joi.string().default('silly'),
   })
   .unknown();
 
@@ -20,4 +21,5 @@ if (error) {
 export default {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
+  logLevel: envVars.LOG_LEVEL,
 };
