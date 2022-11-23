@@ -15,7 +15,7 @@ if (config.env !== 'development' || config.env !== 'local') {
 }
 
 const LoggerInstance = winston.createLogger({
-  level: config.logLevel,
+  level: config.log.level,
   levels: winston.config.npm.levels,
   format: winston.format.combine(
     winston.format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),

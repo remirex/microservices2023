@@ -2,7 +2,15 @@ import dotenv from 'dotenv';
 import path from 'path';
 import Joi from 'joi';
 
-dotenv.config({ path: path.join(__dirname, '../../.env') });
+// Set the NODE_ENV to 'development' by default
+process.env.NODE_ENV = process.env.NODE_ENV || 'development';
+
+const envFound = dotenv.config({ path: path.join(__dirname, '../../.env') });
+if (envFound.error) {
+  // This error should crash whole process
+
+  throw new Error("⚠️  Couldn't find .env file  ⚠️");
+}
 
 const envVarSchema = Joi.object()
   .keys({
@@ -21,5 +29,7 @@ if (error) {
 export default {
   env: envVars.NODE_ENV,
   port: envVars.PORT,
-  logLevel: envVars.LOG_LEVEL,
+  log: {
+    level: envVars.LOG_LEVEL,
+  },
 };
